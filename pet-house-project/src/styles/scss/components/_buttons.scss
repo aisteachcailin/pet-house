@@ -1,0 +1,28 @@
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s;
+    font-size: 1rem;
+    display: inline-block;
+
+    &--primary {
+        background: #1a5276;
+        color: white;
+    }
+
+    &--primary:hover {
+        background: #144562;
+    }
+
+    &--accent {
+        background: #e67e22;
+        color: white;
+    }
+
+    &--accent:hover {
+        background: #d35400;
+    }
+}

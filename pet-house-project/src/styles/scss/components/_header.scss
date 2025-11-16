@@ -1,0 +1,42 @@
+.header {
+    // background: $white;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    height: $header-height;
+    // border-bottom: 1px solid $border-color;
+
+    &__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+        // max-width: $container-width;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .logo {
+        &__text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            // color: $primary-color;
+        }
+    }
+
+    .nav {
+        display: flex;
+        gap: 2rem;
+
+        &__link {
+            // color: $text-color;
+            font-weight: 500;
+            transition: color 0.3s ease;
+
+            &:hover {
+                // color: $primary-color;
+            }
+        }
+    }
+}
