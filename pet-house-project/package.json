@@ -6,10 +6,12 @@
     "scss:watch": "sass --watch src/styles/scss:src/styles/css",
     "scss:build": "sass src/styles/scss:src/styles/css",
     "dev": "concurrently \"npm run scss:watch\" \"live-server src --port=3000\"",
-    "build": "npm run scss:build"
+    "build": "npm run scss:build && node scripts/build.js",
+    "preview": "live-server dist --port=3000"
   },
   "devDependencies": {
     "concurrently": "^9.2.1",
+    "cpx2": "^8.0.0",
     "live-server": "^1.2.2",
     "sass": "^1.77.0"
   }

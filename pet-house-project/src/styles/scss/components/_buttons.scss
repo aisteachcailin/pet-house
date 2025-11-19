@@ -1,28 +1,68 @@
 .btn {
-    padding: 12px 24px;
+    padding: 14px 24px;
     border: none;
-    border-radius: 4px;
+    border-radius: 32px;
     cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s;
-    font-size: 1rem;
-    display: inline-block;
+    font-weight: $font-weight-medium;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: $font-main;
+    white-space: nowrap;
 
+    // Основная кнопка (синяя)
     &--primary {
-        background: #1a5276;
-        color: white;
+        background: $accent-color;
+        color: $white;
+        
+        &:hover {
+            background: #69B0FF;
+        }
     }
 
-    &--primary:hover {
-        background: #144562;
+    // Кнопка с обводкой (белая)
+    &--outline {
+        background: $white;
+        border: 1px solid $accent-color;
+        color: $accent-color;
+        box-shadow: 
+            1px -1px 6px rgba(190, 220, 255, 0.25),
+            1px -1px 6px rgba(59, 112, 173, 0.2);
+        
+        &:hover {
+            background: rgba(93, 169, 255, 0.05);
+        }
     }
 
-    &--accent {
-        background: #e67e22;
-        color: white;
+    // Стрелка в кнопке
+    &__arrow {
+        width: 20px;
+        height: 20px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: $white;
+        font-size: 20px;
+        line-height: 1;
     }
 
-    &--accent:hover {
-        background: #d35400;
+    // Стрелка для outline кнопок
+    &--outline &__arrow {
+        color: $accent-color;
+    }
+
+    // Адаптивные размеры (можно переопределить через миксин)
+    @media (max-width: $breakpoint-tablet) {
+        padding: 12px 20px;
+        font-size: 18px;
+        border-radius: 28px;
+    }
+
+    @media (max-width: $breakpoint-mobile) {
+        padding: 10px 16px;
+        font-size: 16px;
+        border-radius: 24px;
     }
 }

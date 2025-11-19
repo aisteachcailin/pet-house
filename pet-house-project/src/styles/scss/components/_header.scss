@@ -1,42 +1,83 @@
 .header {
-    // background: $white;
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
+    background: transparent;
+    backdrop-filter: blur(0px);
+    transition: all 0.3s ease;
     height: $header-height;
-    // border-bottom: 1px solid $border-color;
+
+    &.scrolled {
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(6px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .container {
+        height: 100%;
+        padding: 0 16px;
+    }
 
     &__inner {
         display: flex;
         align-items: center;
         justify-content: space-between;
         height: 100%;
-        // max-width: $container-width;
-        margin: 0 auto;
-        padding: 0 20px;
     }
 
     .logo {
         &__text {
-            font-size: 1.5rem;
-            font-weight: bold;
-            // color: $primary-color;
+            font-size: 20px;
+            font-weight: $font-weight-semibold;
+            color: $text-color;
         }
     }
 
     .nav {
         display: flex;
-        gap: 2rem;
+        gap: 2px;
+        align-items: center;
 
         &__link {
-            // color: $text-color;
-            font-weight: 500;
-            transition: color 0.3s ease;
+            color: $text-color;
+            font-weight: $font-weight-light;
+            font-size: 16px;
+            padding: 7.5px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
 
             &:hover {
-                // color: $primary-color;
+                background: #EAF4FF;
             }
+        }
+    }
+
+    @media (max-width: $breakpoint-tablet) {
+        .nav {
+            gap: 2px;
+            
+            &__link {
+                font-size: 14px;
+                padding: 6px 10px;
+            }
+        }
+
+        .btn {
+            padding: 12px 20px;
+            font-size: 18px;
+        }
+    }
+
+    @media (max-width: $breakpoint-mobile) {
+        height: 70px;
+
+        .nav {
+            display: none;
+        }
+
+        .logo__text {
+            font-size: 18px;
         }
     }
 }

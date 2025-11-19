@@ -4,76 +4,234 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ПЭТ-Хаус НН - Производство ПЭТ-тары</title>
-    
-    <!-- Правильный путь к CSS -->
     <link rel="stylesheet" href="./styles/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header__inner">
-                <div class="logo">
-                    <span class="logo__text">ПЭТ-Хаус НН</span>
-                </div>
-                <nav class="nav">
-                    <a href="index.html" class="nav__link">Главная</a>
-                    <a href="pages/catalog.html" class="nav__link">Каталог</a>
-                    <a href="pages/about.html" class="nav__link">О компании</a>
-                    <a href="pages/production.html" class="nav__link">О производстве</a>
-                    <a href="pages/delivery.html" class="nav__link">Доставка и оплата</a>
-                    <a href="pages/contacts.html" class="nav__link">Контакты</a>
-                </nav>
-                <button class="btn btn--primary" id="contactBtn">СВЯЗАТЬСЯ С НАМИ</button>
-            </div>
-        </div>
-    </header>
+    <div id="header"></div>
 
-    <!-- Main Content -->
     <main class="main">
-        <section class="hero">
+        <section class="hero" style="background-image: url('../public/images/hero-bg.jpg');">
             <div class="container">
                 <h1 class="hero__title">ПЭТ-тара, которой можно доверять</h1>
-                <p class="hero__subtitle">Производство и продажа ПЭТ-тары в Нижнем Новгороде, Нижегородской области и ближайших регионах</p>
-                <button class="hero__btn">Оставить заявку</button>
+                <p class="hero__subtitle">Производство и продажа ПЭТ-тары в Нижнем Новгороде, Нижегородской области и близлежащих регионах</p>
+                <button class="btn btn--primary hero__btn">Перейти в каталог</button>
             </div>
         </section>
-        <section class="advantages">
+
+        <section class="features">
             <div class="container">
-                <div class="advantages__grid">
-                    <div class="advantages__item">
-                        <div class="advantage__icon">💰</div>
-                        <h3 class="advantage__title">Низкие цены</h3>
-                        <p class="advantage__text">Конкурентные цены за счет собственного производства</p>
+                <div class="features__grid">
+                    <div class="feature__item">
+                        <div class="feature__icon">
+                            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M32 12L38 24H50L41 32L44 44L32 38L20 44L23 32L14 24H26L32 12Z" fill="#5DA9FF"/>
+                            </svg>
+                        </div>
+                        <p class="feature__text">Низкие цены</p>
                     </div>
-                    <div class="advantages__item">
-                        <div class="advantage__icon">⭐</div>
-                        <h3 class="advantage__title">Высокое качество</h3>
-                        <p class="advantage__text">Строгий контроль качества на всех этапах</p>
+                    <div class="feature__item">
+                        <div class="feature__icon">
+                            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M32 8L40 20H54L44 28L48 42L32 36L16 42L20 28L10 20H24L32 8Z" fill="#5DA9FF"/>
+                            </svg>
+                        </div>
+                        <p class="feature__text">Высокое качество</p>
                     </div>
-                    <div class="advantages__item">
-                        <div class="advantage__icon">🎨</div>
-                        <h3 class="advantage__title">Индивидуальный дизайн</h3>
-                        <p class="advantage__text">Уникальные решения под ваш бренд</p>
+                    <div class="feature__item">
+                        <div class="feature__icon">
+                            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M32 16L36 24H46L38 30L40 40L32 34L24 40L26 30L18 24H28L32 16Z" fill="#5DA9FF"/>
+                            </svg>
+                        </div>
+                        <p class="feature__text">Индивидуальный дизайн</p>
                     </div>
-                    <div class="advantages__item">
-                        <div class="advantage__icon">🚚</div>
-                        <h3 class="advantage__title">Быстрая доставка</h3>
-                        <p class="advantage__text">Оперативная доставка по всем регионам</p>
+                    <div class="feature__item">
+                        <div class="feature__icon">
+                            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16 32L28 20L32 24L20 36L16 32Z" fill="#5DA9FF"/>
+                                <path d="M32 20L44 32L40 36L28 24L32 20Z" fill="#5DA9FF"/>
+                                <path d="M24 40L36 28L40 32L28 44L24 40Z" fill="#5DA9FF"/>
+                            </svg>
+                        </div>
+                        <p class="feature__text">Быстрая доставка</p>
                     </div>
+                    <div class="feature__item">
+                        <div class="feature__icon">
+                            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="16" y="16" width="32" height="32" rx="4" fill="#5DA9FF"/>
+                            </svg>
+                        </div>
+                        <p class="feature__text">Большой ассортимент</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="new-products">
+            <div class="container">
+                <h2 class="section__title">Новинки</h2>
+                <div class="new-products__content">
+                    <div class="new-products__text">
+                        <p>Упаковка для электродов</p>
+                        <p>Упаковки для соусов</p>
+                        <p>Упаковка для БАДов, сыпучих и гранулированных продуктов</p>
+                    </div>
+                    <button class="btn btn--primary new-products__btn">
+                        Смотреть новинки
+                        <span class="btn__arrow">→</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="top-sales">
+            <div class="container">
+                <h2 class="section__title">Топ продаж</h2>
+                <div class="top-sales__grid">
+                    <div class="product-card">
+                        <div class="product-card__image"></div>
+                        <div class="product-card__info">
+                            <h3 class="product-card__title">Канистра 5.0 л</h3>
+                            <p class="product-card__detail">Горловина: 38 мм</p>
+                            <p class="product-card__detail">Стандарт: Bericap</p>
+                            <p class="product-card__detail">Упаковка: 15 шт</p>
+                            <p class="product-card__detail">Назначение: Пиво, газирован...</p>
+                            <div class="product-card__footer">
+                                <span class="product-card__price">от 6.30 р/шт</span>
+                                <button class="product-card__cart"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-card__image"></div>
+                        <div class="product-card__info">
+                            <h3 class="product-card__title">Бутылка 0.5 л</h3>
+                            <p class="product-card__detail">Горловина: 38 мм</p>
+                            <p class="product-card__detail">Стандарт: Bericap</p>
+                            <p class="product-card__detail">Упаковка: 100 шт</p>
+                            <p class="product-card__detail">Назначение: Молоко</p>
+                            <div class="product-card__footer">
+                                <span class="product-card__price">от 6.30 р/шт</span>
+                                <button class="product-card__cart"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-card__image"></div>
+                        <div class="product-card__info">
+                            <h3 class="product-card__title">Бутылка 0.93 л</h3>
+                            <p class="product-card__detail">Горловина: 38 мм</p>
+                            <p class="product-card__detail">Стандарт: Bericap</p>
+                            <p class="product-card__detail">Упаковка: 50 шт</p>
+                            <p class="product-card__detail">Назначение: Молоко</p>
+                            <div class="product-card__footer">
+                                <span class="product-card__price">от 6.30 р/шт</span>
+                                <button class="product-card__cart"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-card__image"></div>
+                        <div class="product-card__info">
+                            <h3 class="product-card__title">Канистра 5.0 л</h3>
+                            <p class="product-card__detail">Горловина: 48 мм</p>
+                            <p class="product-card__detail">Стандарт: Bericap</p>
+                            <p class="product-card__detail">Упаковка: 15 шт</p>
+                            <p class="product-card__detail">Назначение: Химия, удобрени...</p>
+                            <div class="product-card__footer">
+                                <span class="product-card__price">от 6.30 р/шт</span>
+                                <button class="product-card__cart"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn--primary top-sales__btn">
+                    Перейти в каталог
+                    <span class="btn__arrow">→</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="business">
+            <div class="container">
+                <div class="business__content">
+                    <div class="business__info">
+                        <h2 class="business__title">ПЭТ-тара для Вашего бизнеса:</h2>
+                        <p class="business__subtitle">Надежность, качество, инновации</p>
+                        <div class="business__tags">
+                            <span class="tag">Пивоварение</span>
+                            <span class="tag">Лимонады</span>
+                            <span class="tag">Молоко</span>
+                            <span class="tag">Незамерзающая жидкость</span>
+                            <span class="tag">Соки</span>
+                            <span class="tag">Косметика</span>
+                            <span class="tag">Химия</span>
+                            <span class="tag">Масла</span>
+                            <span class="tag">Удобрения</span>
+                            <span class="tag">Соусы</span>
+                            <span class="tag">Электроды</span>
+                            <span class="tag">БАДы, сыпучие и гранулированные продукты</span>
+                        </div>
+                    </div>
+                    <div class="business__visual"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="company-info">
+            <div class="container">
+                <div class="company-info__grid">
+                    <div class="info-card">
+                        <h3 class="info-card__title">О компании ООО ГК «МАРГКОМ»</h3>
+                        <p class="info-card__text">Диверсифицированная группа компаний, занимающаяся производством ПЭТ-тары, расфасованными маслами, дистрибуцией жировых и масложировых продуктов, а также поставкой сырья для пищевой промышленности.</p>
+                        <a href="pages/about.html" class="info-card__link">Подробнее ></a>
+                    </div>
+                    <div class="info-card">
+                        <h3 class="info-card__title">Наше производство</h3>
+                        <p class="info-card__text">Производство ПЭТ-тары мощностью до 5 млн единиц в месяц, широкий ассортимент (бутылки от 0,1 л до 5 л, флаконы, канистры), контроль качества, доступные цены и индивидуальные решения.</p>
+                        <a href="pages/production.html" class="info-card__link">Подробнее ></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="custom-form">
+            <div class="container">
+                <div class="custom-form__content">
+                    <h2 class="custom-form__title">Ваша уникальная тара — от эскиза до реальности!</h2>
+                    <p class="custom-form__subtitle">Воплотим ваш дизайн в ПЭТ-таре — от идеи до готового продукта. Начнем прямо сейчас!</p>
+                    <form class="form" id="customForm">
+                        <div class="form__group">
+                            <input type="text" id="formName" name="name" class="form__input" placeholder="Имя" required>
+                            <span class="form__error form__error--right" id="nameError"></span>
+                        </div>
+                        <div class="form__group">
+                            <input type="tel" id="formPhone" name="phone" class="form__input" placeholder="Телефон" required>
+                            <span class="form__error form__error--bottom" id="phoneError"></span>
+                        </div>
+                        <div class="form__group">
+                            <input type="email" id="formEmail" name="email" class="form__input" placeholder="Почта" required>
+                            <span class="form__error form__error--right" id="emailError"></span>
+                        </div>
+                        <div class="form__group">
+                            <label class="form__checkbox">
+                                <input type="checkbox" id="formAgree" name="agree" required>
+                                <span>Согласие на <a href="#" target="_blank">обработку персональных данных</a></span>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn--primary form__submit">Отправить</button>
+                    </form>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>© 2024 ПЭТ-Хаус НН. Все права защищены.</p>
-        </div>
-    </footer>
+    <div id="footer"></div>
 
-    <!-- Правильный путь к JS -->
     <script src="./js/main.js"></script>
+    <script src="./js/form.js"></script>
 </body>
 </html>

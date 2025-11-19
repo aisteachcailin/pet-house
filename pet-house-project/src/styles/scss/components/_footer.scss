@@ -1,0 +1,198 @@
+.footer {
+    background: $white;
+    color: $text-color;
+    padding: 0;
+
+    &__cta-top {
+        background: $white;
+        padding: 40px 0;
+        border-bottom: 1px solid rgba(5, 19, 58, 0.1);
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+    }
+
+    &__cta-text {
+        font-size: 16px;
+        font-weight: $font-weight-light;
+        color: $text-color;
+    }
+
+    &__cta-btn {
+        flex-shrink: 0;
+    }
+
+    &__content {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 60px 0;
+    }
+
+
+    &__list {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    &__link {
+        color: $text-color;
+        text-decoration: none;
+        font-size: 24px;
+        font-weight: $font-weight-light;
+        transition: color 0.3s;
+
+        &:hover {
+            color: $accent-color;
+        }
+
+        // Политика конфиденциальности
+        &--policy {
+            margin-top: 40px;
+            font-size: 18px;
+            font-weight: 400;
+            color: #7E869B;
+        }
+    }
+
+    .address__item {
+        margin-bottom: 16px;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+
+        strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #7E869B;
+            font-weight: $font-weight-light;
+            font-size: 24px;
+        }
+
+        span {
+            display: block;
+            margin-bottom: 24px;
+            color: $text-color;
+            font-size: 24px;
+            font-weight: $font-weight-light;
+        }
+    }
+
+    .map-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 24px;
+        background: $white;
+        border: 1px solid $accent-color;
+        color: $accent-color;
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: $font-weight-medium;
+        border-radius: 32px;
+        box-shadow: 
+            1px -1px 6px rgba(190, 220, 255, 0.25),
+            1px -1px 6px rgba(59, 112, 173, 0.2);
+        transition: all 0.3s ease;
+        margin-top: 8px;
+
+        &::after {
+            content: '→';
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        &:hover {
+            background: rgba(93, 169, 255, 0.05);
+        }
+    }
+
+    .contacts__section {
+        margin-bottom: 24px;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+    .footer__title {
+        color: #7E869B;
+        font-weight: $font-weight-light;
+        font-size: 24px;
+        margin-bottom: 12px;
+    }
+
+    .phone-numbers {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+
+    .phone-link, .email-link {
+        color: $text-color;
+        text-decoration: none;
+        font-size: 24px;
+        font-weight: $font-weight-light;
+        transition: color 0.3s;
+
+        &:hover {
+            color: $accent-color;
+        }
+    }
+}
+
+@media (min-width: $breakpoint-tablet) {
+    .footer {
+        &__content {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+        }
+
+        &__cta-top {
+            .container {
+                flex-direction: row;
+            }
+        }
+    }
+}
+
+@media (max-width: $breakpoint-tablet) {
+    .footer {
+        &__cta-top {
+            .container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        &__content {
+            gap: 40px;
+        }
+    }
+}
+
+@media (max-width: $breakpoint-mobile) {
+    .footer {
+        &__cta-top {
+            padding: 30px 0;
+
+            &__text {
+                font-size: 14px;
+            }
+        }
+
+        &__content {
+            padding: 40px 0;
+            gap: 30px;
+        }
+    }
+}

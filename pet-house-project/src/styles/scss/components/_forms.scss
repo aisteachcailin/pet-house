@@ -1,0 +1,99 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 500px;
+    align-items: flex-start;
+
+    &__group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        position: relative;
+    }
+
+    &__input {
+        padding: 14px 16px;
+        border: 1px solid rgba(5, 19, 58, 0.2);
+        border-radius: 8px;
+        font-size: 16px;
+        font-family: $font-main;
+        font-weight: $font-weight-light;
+        color: $text-color;
+        background: $white;
+        transition: all 0.3s ease;
+        width: 100%;
+
+        &:focus {
+            outline: none;
+            border-color: $accent-color;
+        }
+
+        &--error {
+            border-color: #e74c3c;
+            border-width: 1px;
+        }
+
+        &::placeholder {
+            color: $text-secondary;
+        }
+    }
+
+    &__error {
+        font-size: 12px;
+        font-weight: $font-weight-light;
+        display: inline-block;
+        background: #e74c3c;
+        color: $white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        white-space: nowrap;
+        
+        // Позиционирование справа
+        &--right {
+            position: absolute;
+            right: -110px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        // Позиционирование снизу
+        &--bottom {
+            position: static;
+            margin-top: 4px;
+            transform: none;
+        }
+
+        // Скрыть если пусто
+        &:empty {
+            display: none;
+        }
+    }
+
+    &__checkbox {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: $font-weight-light;
+        color: $text-color;
+        cursor: pointer;
+
+        a {
+            color: $accent-color;
+            text-decoration: underline;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+    }
+
+    &__submit {
+        margin-top: 10px;
+        align-self: flex-start;
+    }
+}
+
