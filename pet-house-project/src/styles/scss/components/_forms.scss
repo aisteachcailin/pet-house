@@ -1,72 +1,104 @@
 .form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    max-width: 500px;
-    align-items: flex-start;
+
+    &-fields-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 16px; // 16px между первыми тремя полями
+    }
 
     &__group {
         display: flex;
         flex-direction: column;
-        width: 100%;
         position: relative;
+
+        &-checkbox {
+            margin: 12px 0 24px; // 12px ниже верхних полей, 24px до кнопки
+        }
+    }
+
+    &__label {
+        font-size: 14px;
+        font-weight: $font-weight-light;
+        color: $white;
+        position: absolute;
+        top: 11px; 
+        left: 24px;
+        pointer-events: none;
+        line-height: 140%;
     }
 
     &__input {
-        padding: 14px 16px;
-        border: 1px solid rgba(5, 19, 58, 0.2);
-        border-radius: 8px;
-        font-size: 16px;
+        padding: 32px 24px 12px; 
+        border: 1px solid transparent;
+        border-radius: 32px;
+        font-size: 18px; 
         font-family: $font-main;
         font-weight: $font-weight-light;
-        color: $text-color;
-        background: $white;
+        color: #A1B6CC; 
+        background: #3161A3; 
         transition: all 0.3s ease;
-        width: 100%;
+        width: 350px;
+        height: 58px;
+        line-height: 140%;
+        box-sizing: border-box;
+
+        &::placeholder {
+            color: #A1B6CC;
+            opacity: 0;
+        }
 
         &:focus {
             outline: none;
-            border-color: $accent-color;
+            border-color: $white; 
+            color: $white; 
+            background: #3161A3;
+        }
+
+        &:hover {
+            background: rgba(49, 97, 163, 0.9);
+        }
+
+        &--filled {
+            color: $white;
+            border-color: transparent;
+            background: #3161A3;
         }
 
         &--error {
-            border-color: #e74c3c;
-            border-width: 1px;
-        }
-
-        &::placeholder {
-            color: $text-secondary;
+            border-color: #FF4D4D !important;
+            background: #3161A3;
         }
     }
 
     &__error {
-        font-size: 12px;
+        font-size: 14px;
         font-weight: $font-weight-light;
-        display: inline-block;
-        background: #e74c3c;
-        color: $white;
-        padding: 4px 8px;
-        border-radius: 4px;
+        color: $white; 
+        background: #FF4D4D; 
+        padding: 7px 12px;
+        border-radius: 25px;
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 362px;
+        transform: translateY(-50%);
         white-space: nowrap;
-        
-        // Позиционирование справа
-        &--right {
-            position: absolute;
-            right: -110px;
-            top: 50%;
-            transform: translateY(-50%);
+
+        &:not(:empty) {
+            display: block;
         }
 
-        // Позиционирование снизу
-        &--bottom {
+        @media (max-width: $breakpoint-tablet) {
             position: static;
-            margin-top: 4px;
             transform: none;
-        }
-
-        // Скрыть если пусто
-        &:empty {
+            margin-top: 8px;
             display: none;
+            
+            &:not(:empty) {
+                display: block;
+            }
         }
     }
 
@@ -74,26 +106,146 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        font-size: 14px;
-        font-weight: $font-weight-light;
-        color: $text-color;
         cursor: pointer;
 
-        a {
-            color: $accent-color;
-            text-decoration: underline;
+        &-input {
+            display: none;
+
+            &:checked + .form__checkbox-checkmark {
+                background: #29558F;
+                border-color: #5DA9FF; 
+                background: url('/images/icons/check.svg') no-repeat center;
+
+            }
         }
 
-        input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
+        &-checkmark {
+            width: 24px;
+            height: 24px;
+            border: 1px solid #3161A3;
+            border-radius: 6px; 
+            background: #29558F;
         }
-    }
 
-    &__submit {
-        margin-top: 10px;
-        align-self: flex-start;
+        &-text {
+            font-size: 14px;
+            font-weight: $font-weight-light;
+            color: #A1B6CC;
+            line-height: 1.4;
+
+            a {
+                color: #A1B6CC;
+                text-decoration: underline;
+                transition: opacity 0.3s ease;
+            }
+        }
     }
 }
 
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    &.active {
+        display: flex;
+        opacity: 1;
+    }
+}
+
+.popup {
+    background: $white;
+    border-radius: 12px;
+    padding: 40px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+
+    .popup-overlay.active & {
+        transform: translateY(0);
+    }
+
+    &__title {
+        font-size: 24px;
+        font-weight: $font-weight-semibold;
+        color: $text-color;
+        margin-bottom: 16px;
+    }
+
+    &__text {
+        font-size: 16px;
+        color: $text-secondary;
+        margin-bottom: 24px;
+        line-height: 1.4;
+    }
+
+    &__close {
+        min-width: 120px;
+    }
+}
+
+
+@media (max-width: $breakpoint-tablet) {
+    .custom-form {
+        padding: 40px 0;
+
+        &__title {
+            font-size: 28px;
+        }
+
+        &__subtitle {
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+    }
+
+    .form {
+        &-fields-wrapper {
+            gap: 16px;
+        }
+
+        &__input {
+            padding: 26px 20px 10px 20px; 
+            height: 52px;
+        }
+
+        &__error {
+            position: static;
+            transform: none;
+            margin-top: 8px;
+        }
+    }
+
+    .popup {
+        padding: 30px 24px;
+    }
+}
+
+@media (max-width: $breakpoint-mobile) {
+    .custom-form {
+        &__title {
+            font-size: 24px;
+        }
+
+        &__subtitle {
+            font-size: 14px;
+        }
+    }
+
+    .form {
+        &__submit {
+            width: 100%;
+        }
+    }
+}

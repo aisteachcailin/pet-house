@@ -445,20 +445,20 @@ section .container {
   font-family: "Roboto", sans-serif;
   white-space: nowrap;
 }
-.btn--primary {
+.btn__primary {
   background: #5DA9FF;
   color: #ffffff;
 }
-.btn--primary:hover {
+.btn__primary:hover {
   background: #69B0FF;
 }
-.btn--outline {
+.btn__outline {
   background: #ffffff;
   border: 1px solid #5DA9FF;
   color: #5DA9FF;
   box-shadow: 1px -1px 6px rgba(190, 220, 255, 0.25), 1px -1px 6px rgba(59, 112, 173, 0.2);
 }
-.btn--outline:hover {
+.btn__outline:hover {
   background: rgba(93, 169, 255, 0.05);
 }
 .btn__arrow {
@@ -471,7 +471,7 @@ section .container {
   font-size: 20px;
   line-height: 1;
 }
-.btn--outline .btn__arrow {
+.btn__outline .btn__arrow {
   color: #5DA9FF;
 }
 @media (max-width: 768px) {
@@ -498,6 +498,7 @@ section .container {
 }
 
 .hero {
+  background-image: url("/images/hero-bg.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

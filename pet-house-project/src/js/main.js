@@ -46,8 +46,8 @@ function initHeaderScroll() {
 
 // Загружаем компоненты при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
-    loadComponent('header', './components/header.html');
-    loadComponent('footer', './components/footer.html');
+    loadComponent('header', '/src/components/header.html');
+    loadComponent('footer', '/src/components/footer.html');
     
     console.log('ПЭТ-Хаус НН - сайт работает!');
 });

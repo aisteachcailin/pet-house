@@ -2,14 +2,12 @@ body {
     font-family: $font-main;
     font-weight: $font-weight-light;
     color: $text-color;
-    line-height: 1.6;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: $font-main;
     font-weight: $font-weight-semibold;
     line-height: 1.2;
-    margin-bottom: 1rem;
     color: $text-color;
 }
 
@@ -26,7 +24,7 @@ h3 {
 }
 
 p {
-    margin-bottom: 1rem;
+    margin-bottom: 0;
     font-weight: $font-weight-light;
 }
 

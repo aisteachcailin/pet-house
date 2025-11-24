@@ -11,9 +11,10 @@
     gap: 8px;
     font-family: $font-main;
     white-space: nowrap;
+    outline: none;
+    width: fit-content;
 
-    // Основная кнопка (синяя)
-    &--primary {
+    &__primary {
         background: $accent-color;
         color: $white;
         
@@ -22,8 +23,7 @@
         }
     }
 
-    // Кнопка с обводкой (белая)
-    &--outline {
+    &__outline {
         background: $white;
         border: 1px solid $accent-color;
         color: $accent-color;
@@ -36,24 +36,6 @@
         }
     }
 
-    // Стрелка в кнопке
-    &__arrow {
-        width: 20px;
-        height: 20px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        color: $white;
-        font-size: 20px;
-        line-height: 1;
-    }
-
-    // Стрелка для outline кнопок
-    &--outline &__arrow {
-        color: $accent-color;
-    }
-
-    // Адаптивные размеры (можно переопределить через миксин)
     @media (max-width: $breakpoint-tablet) {
         padding: 12px 20px;
         font-size: 18px;
