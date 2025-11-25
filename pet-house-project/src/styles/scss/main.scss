@@ -1,17 +1,14 @@
-// Base
 @import 'base/reset';
 @import 'base/variables';
 @import 'base/typography';
 
-// Layout
 @import 'layout/grid';
 @import 'layout/sections';
 
-// Components
 @import 'components/header';
 @import 'components/footer';
 @import 'components/forms';
 @import 'components/buttons';
 
-// Pages
 @import 'pages/home';
+@import 'pages/catalog';

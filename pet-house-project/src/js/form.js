@@ -1,22 +1,28 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     emailjs.init('bkNMM51XqfqT68kLx');
-    new FormValidator('customForm');
+    ['customForm', 'modalForm'].forEach((formId) => {
+        if (document.getElementById(formId)) {
+            new FormValidator(formId);
+        }
+    });
 });
 
 const CONFIG = {
     emailService: {
-        serviceID: 'service_pukpuk', 
+        serviceID: 'service_pukpuk',
         templateID: 'template_jlt7wwy',
-        publicKey: 'bkNMM51XqfqT68kLx' 
+        publicKey: 'bkNMM51XqfqT68kLx'
     },
     patterns: {
-        name: /^[а-яА-ЯёЁa-zA-Z\s\-]{2,50}$/,
+        name: /^[а-яА-ЯёЁa-zA-Z\s-]{2,50}$/,
         phone: /^\+7\s\d{3}\s\d{3}\s\d{2}\s-\s\d{2}$/,
         email: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
     },
     messages: {
-        required: 'Пожалуйста, заполните поле',
-        invalidName: 'Имя должно содержать только буквы (2-50 символов)',
+        requiredName: 'Пожалуйста, укажите имя',
+        requiredPhone: 'Пожалуйста, укажите телефон',
+        requiredEmail: 'Пожалуйста, укажите email',
+        invalidName: 'Имя должно содержать 2-50 букв',
         invalidPhone: 'Введите телефон в формате: +7 900 900 90 - 90',
         invalidEmail: 'Введите корректный email адрес',
         agreementRequired: 'Необходимо согласие'
@@ -26,87 +32,119 @@ const CONFIG = {
 class PhoneMask {
     constructor(input) {
         this.input = input;
+        if (!this.input) {
+            return;
+        }
         this.init();
     }
 
     init() {
-        this.input.addEventListener('input', (e) => this.formatPhone(e));
-        this.input.addEventListener('keydown', (e) => this.handleKeyDown(e));
+        this.input.addEventListener('input', (event) => this.formatPhone(event));
+        this.input.addEventListener('keydown', (event) => this.handleKeyDown(event));
         this.input.addEventListener('blur', () => this.validateCompletePhone());
     }
 
-    formatPhone(e) {
-        let value = e.target.value.replace(/[^\d+]/g, '');
-        
-        if (value.length > 16) {
-            value = value.substring(0, 16);
+    formatPhone(event) {
+        const cursorPosition = event.target.selectionStart;
+        let value = event.target.value.replace(/\D/g, '');
+        const isBackspace = event.inputType === 'deleteContentBackward';
+
+        if (value.length > 11) {
+            value = value.substring(0, 11);
         }
 
-        if (value.startsWith('+7')) {
-            value = value.substring(2);
-        } else if (value.startsWith('7') || value.startsWith('8')) {
-            value = value.substring(1);
+        let formattedValue = '';
+
+        if (value.length > 0) {
+            formattedValue = '+7 ';
+
+            if (value.length > 1) {
+                formattedValue += value.substring(1, 4);
+            }
+
+            if (value.length >= 4) {
+                formattedValue += ` ${value.substring(4, 7)}`;
+            }
+
+            if (value.length >= 7) {
+                formattedValue += ` ${value.substring(7, 9)}`;
+            }
+
+            if (value.length >= 9) {
+                formattedValue += ` - ${value.substring(9, 11)}`;
+            }
         }
 
-        let formattedValue = '+7 ';
-        for (let i = 0; i < value.length; i++) {
-            if (i === 3) formattedValue += ' ';
-            if (i === 6) formattedValue += ' ';
-            if (i === 8) formattedValue += ' ';
-            if (i === 10) formattedValue += ' - ';
-            if (i >= 12) break; 
-            formattedValue += value[i];
+        const previousValue = event.target.value;
+        event.target.value = formattedValue;
+
+        let newPosition = cursorPosition;
+
+        if (isBackspace && previousValue.length > formattedValue.length) {
+            newPosition = Math.max(0, cursorPosition - (previousValue.length - formattedValue.length));
+        } else if (!isBackspace) {
+            const addedChars = formattedValue.length - previousValue.length;
+            if (addedChars > 0) {
+                newPosition = cursorPosition + addedChars;
+            }
         }
 
-        formattedValue = formattedValue.trim();
-        e.target.value = formattedValue;
+        newPosition = Math.min(newPosition, formattedValue.length);
+        event.target.setSelectionRange(newPosition, newPosition);
     }
 
-    handleKeyDown(e) {
-        if ([46, 8, 9, 27, 13].includes(e.keyCode) ||
+    handleKeyDown(event) {
+        const controlKeys = [8, 9, 27, 13, 46, 37, 38, 39, 40];
+        const comboKeys = [65, 67, 86, 88];
 
-            (e.keyCode === 65 && e.ctrlKey === true) ||
-
-            (e.keyCode >= 35 && e.keyCode <= 39)) {
+        if (controlKeys.includes(event.keyCode) || (event.ctrlKey && comboKeys.includes(event.keyCode))) {
             return;
         }
-        
-        if ((e.keyCode < 48 || e.keyCode > 57) && e.keyCode !== 187 && e.keyCode !== 107) {
-            e.preventDefault();
+
+        const isNumberKey =
+            (event.keyCode >= 48 && event.keyCode <= 57) ||
+            (event.keyCode >= 96 && event.keyCode <= 105);
+
+        if (!isNumberKey) {
+            event.preventDefault();
         }
     }
 
     validateCompletePhone() {
-        const value = this.input.value;
-        if (value && !CONFIG.patterns.phone.test(value)) {
+        if (!this.input.value) {
+            return;
+        }
+
+        const cleanValue = this.input.value.replace(/\D/g, '');
+
+        if (cleanValue.length !== 11) {
             this.input.classList.add('form__input--error');
         }
-    }
-
-    getCleanPhone() {
-        return this.input.value.replace(/[^\d+]/g, '');
     }
 }
 
 class FormValidator {
     constructor(formId) {
         this.form = document.getElementById(formId);
+        if (!this.form) {
+            return;
+        }
+
         this.inputs = {
             name: document.getElementById('formName'),
             phone: document.getElementById('formPhone'),
             email: document.getElementById('formEmail'),
             agree: document.getElementById('formAgree')
         };
+
         this.errors = {
             name: document.getElementById('nameError'),
             phone: document.getElementById('phoneError'),
             email: document.getElementById('emailError'),
             agree: document.getElementById('agreeError')
         };
-        
-        // Инициализируем маску телефона
-        this.phoneMask = new PhoneMask(this.inputs.phone);
-        
+
+        this.phoneMask = this.inputs.phone ? new PhoneMask(this.inputs.phone) : null;
         this.init();
     }
 
@@ -116,121 +154,121 @@ class FormValidator {
     }
 
     setupEventListeners() {
-        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-        
-        // Скрытие ошибок при вводе
-        Object.values(this.inputs).forEach(input => {
-            if (input.type !== 'checkbox') {
-                input.addEventListener('input', () => {
-                    this.clearError(input);
-                    this.updateInputState(input);
-                });
+        this.form.addEventListener('submit', (event) => this.handleSubmit(event));
+
+        Object.values(this.inputs).forEach((input) => {
+            if (!input || input.type === 'checkbox') {
+                return;
             }
+
+            input.addEventListener('input', () => {
+                this.clearError(input);
+                this.updateInputState(input);
+            });
         });
 
-        this.inputs.agree.addEventListener('change', () => {
-            this.clearError(this.inputs.agree);
-        });
+        if (this.inputs.agree) {
+            this.inputs.agree.addEventListener('change', () => {
+                this.clearError(this.inputs.agree);
+            });
+        }
     }
 
     setupRealTimeValidation() {
-        // Валидация при потере фокуса
-        Object.values(this.inputs).forEach(input => {
-            if (input.type !== 'checkbox') {
-                input.addEventListener('blur', () => {
-                    this.validateField(input);
-                });
+        Object.values(this.inputs).forEach((input) => {
+            if (!input || input.type === 'checkbox') {
+                return;
             }
+
+            input.addEventListener('blur', () => {
+                this.validateField(input);
+            });
         });
     }
 
     validateField(input) {
+        if (!input) {
+            return true;
+        }
+
         const value = input.value.trim();
         let isValid = true;
         let message = '';
 
-        switch(input.name) {
+        switch (input.name) {
             case 'name':
                 if (!value) {
                     isValid = false;
-                    message = CONFIG.messages.required;
+                    message = CONFIG.messages.requiredName;
                 } else if (!CONFIG.patterns.name.test(value)) {
                     isValid = false;
                     message = CONFIG.messages.invalidName;
                 }
                 break;
-
             case 'phone':
                 if (!value) {
                     isValid = false;
-                    message = CONFIG.messages.required;
+                    message = CONFIG.messages.requiredPhone;
                 } else if (!CONFIG.patterns.phone.test(value)) {
                     isValid = false;
                     message = CONFIG.messages.invalidPhone;
                 }
                 break;
-
             case 'email':
                 if (!value) {
                     isValid = false;
-                    message = CONFIG.messages.required;
+                    message = CONFIG.messages.requiredEmail;
                 } else if (!this.validateEmail(value)) {
                     isValid = false;
                     message = CONFIG.messages.invalidEmail;
                 }
                 break;
+            default:
+                break;
         }
 
         if (!isValid) {
             this.showError(input, message);
+            input.setCustomValidity(' ');
         } else {
             this.clearError(input);
             this.markAsSuccess(input);
+            input.setCustomValidity('');
         }
 
         return isValid;
     }
 
     validateEmail(email) {
-        // Более строгая валидация email
-        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-        
-        if (!emailRegex.test(email)) {
+        if (!CONFIG.patterns.email.test(email)) {
             return false;
         }
-        
-        // Проверяем длину частей email
-        const parts = email.split('@');
-        if (parts.length !== 2) return false;
-        
-        const localPart = parts[0];
-        const domainPart = parts[1];
-        
-        // Локальная часть не должна быть слишком длинной
-        if (localPart.length > 64) return false;
-        
-        // Домен должен иметь корректную структуру
-        if (domainPart.length > 253) return false;
-        if (!/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(domainPart)) return false;
-        
-        return true;
+
+        const [localPart, domainPart] = email.split('@');
+        if (!localPart || !domainPart) {
+            return false;
+        }
+
+        if (localPart.length > 64 || domainPart.length > 253) {
+            return false;
+        }
+
+        return /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(domainPart);
     }
 
     validateForm() {
         let isValid = true;
 
-        // Валидация полей ввода
-        Object.values(this.inputs).forEach(input => {
-            if (input.type !== 'checkbox' && !this.validateField(input)) {
+        Object.values(this.inputs).forEach((input) => {
+            if (input && input.type !== 'checkbox' && !this.validateField(input)) {
                 isValid = false;
             }
         });
 
-        // Валидация чекбокса
-        if (!this.inputs.agree.checked) {
+        if (this.inputs.agree && !this.inputs.agree.checked) {
             this.showError(this.inputs.agree, CONFIG.messages.agreementRequired);
             isValid = false;
-        } else {
+        } else if (this.inputs.agree) {
             this.clearError(this.inputs.agree);
         }
 
@@ -238,29 +276,45 @@ class FormValidator {
     }
 
     showError(input, message) {
+        if (!input) {
+            return;
+        }
+
         const errorElement = this.errors[input.name];
         input.classList.add('form__input--error');
         input.classList.remove('form__input--success', 'form__input--filled');
-        
+
         if (errorElement) {
             errorElement.textContent = message;
         }
     }
 
     clearError(input) {
+        if (!input) {
+            return;
+        }
+
         const errorElement = this.errors[input.name];
         input.classList.remove('form__input--error');
-        
+
         if (errorElement) {
             errorElement.textContent = '';
         }
     }
 
     markAsSuccess(input) {
+        if (!input) {
+            return;
+        }
+
         input.classList.add('form__input--success', 'form__input--filled');
     }
 
     updateInputState(input) {
+        if (!input) {
+            return;
+        }
+
         if (input.value.trim()) {
             input.classList.add('form__input--filled');
         } else {
@@ -276,10 +330,10 @@ class FormValidator {
         }
 
         const formData = {
-            name: this.inputs.name.value.trim(),
-            phone: this.inputs.phone.value.trim(),
-            email: this.inputs.email.value.trim(),
-            agree: this.inputs.agree.checked
+            name: this.inputs.name ? this.inputs.name.value.trim() : '',
+            phone: this.inputs.phone ? this.inputs.phone.value.trim() : '',
+            email: this.inputs.email ? this.inputs.email.value.trim() : '',
+            agree: this.inputs.agree ? this.inputs.agree.checked : false
         };
 
         try {
@@ -302,73 +356,52 @@ class FormValidator {
                 date: new Date().toLocaleString('ru-RU')
             };
 
-            console.log('📧 Отправляемые данные:', templateParams);
-
-            return await emailjs.send(
+            return emailjs.send(
                 CONFIG.emailService.serviceID,
                 CONFIG.emailService.templateID,
                 templateParams,
                 CONFIG.emailService.publicKey
             );
         }
-        
-        // Резервный вариант через mailto
+
         const subject = encodeURIComponent('Заявка с сайта ПЭТ-Хаус НН');
         const body = encodeURIComponent(
             `Новая заявка:\n\nИмя: ${formData.name}\nТелефон: ${formData.phone}\nEmail: ${formData.email}`
         );
         window.location.href = `mailto:your-email@domain.com?subject=${subject}&body=${body}`;
-        
+
         return Promise.resolve();
     }
 
     showSuccessPopup() {
         const popup = document.getElementById('successPopup');
+        if (!popup) {
+            return;
+        }
+
         popup.classList.add('active');
-        
+
         const closeBtn = popup.querySelector('.popup__close');
-        closeBtn.addEventListener('click', () => {
-            popup.classList.remove('active');
-        });
-        
-        popup.addEventListener('click', (e) => {
-            if (e.target === popup) {
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                popup.classList.remove('active');
+            });
+        }
+
+        popup.addEventListener('click', (event) => {
+            if (event.target === popup) {
                 popup.classList.remove('active');
             }
         });
     }
 
     clearAllErrors() {
-        Object.values(this.inputs).forEach(input => {
+        Object.values(this.inputs).forEach((input) => {
+            if (!input) {
+                return;
+            }
             this.clearError(input);
             input.classList.remove('form__input--filled', 'form__input--success');
         });
     }
-
-    setupEventListeners() {
-        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-        
-        Object.values(this.inputs).forEach(input => {
-            if (input.type !== 'checkbox') {
-                input.addEventListener('input', () => {
-                    this.clearError(input);
-                });
-                
-                input.addEventListener('blur', () => {
-                    this.validateField(input);
-                });
-            }
-        });
-
-        this.inputs.agree.addEventListener('change', () => {
-            this.clearError(this.inputs.agree);
-        });
-    }
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-    const modalForm = document.getElementById('modalForm');
-    if (modalForm) {
-        new FormValidator('modalForm');
-    }
-});

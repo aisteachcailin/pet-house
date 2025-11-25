@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог продукции — ПЭТ-Хаус НН</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/styles/scss/main.scss">
+</head>
+<body>
+    <div id="header"></div>
+
+    <main class="main catalog-page">
+        <section class="hero" style="background-image: url('/images/hero-bg.jpg');">
+            <div class="container">
+                <div class="hero__text">
+                    <span class="glass-block">Каталог</span>
+                    <h1 class="hero__title">Каталог продукции</h1>
+                    <p class="hero__subtitle">Найдите идеальные емкости для упаковки</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <div class="features__grid">
+                    <div class="feature__item">
+                        <div class="feature__icon">
+                            <img src="/images/icons/price.svg" alt="low price">
+                        </div>
+                        <p class="feature__text">Низкие цены</p>
+                    </div>
+                    <div class="feature__item">
+                        <div class="feature__icon">
+                            <img src="/images/icons/quality.svg" alt="good quality">
+                        </div>
+                        <p class="feature__text">Высокое качество</p>
+                    </div>
+                    <div class="feature__item">
+                        <div class="feature__icon">
+                            <img src="/images/icons/design.svg" alt="individual design">
+                        </div>
+                        <p class="feature__text">Индивидуальный дизайн</p>
+                    </div>
+                    <div class="feature__item">
+                        <div class="feature__icon">
+                            <img src="/images/icons/delivery.svg" alt="fast delivery">
+                        </div>
+                        <p class="feature__text">Быстрая доставка</p>
+                    </div>
+                    <div class="feature__item">
+                        <div class="feature__icon">
+                            <img src="/images/icons/assortment.svg" alt="big assortment">
+                        </div>
+                        <p class="feature__text">Большой ассортимент</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="catalog" class="catalog-layout">
+            <div class="container">
+                <div class="catalog-layout__inner">
+                    <aside class="catalog-sidebar">
+                        <form class="catalog-filters" id="catalogFilters">
+                            <div class="catalog-filters__group">
+                                <label class="catalog-filters__label">Продукция</label>
+                                <div class="catalog-filters__checkboxes">
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="type" value="Бутылка">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">Бутылка</span>
+                                    </label>
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="type" value="Канистра">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">Канистра</span>
+                                    </label>
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="type" value="Преформа">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">Преформа</span>
+                                    </label>
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="type" value="Крышка">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">Крышка</span>
+                                    </label>
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="type" value="Ручка">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">Ручка</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="catalog-filters__group">
+                                <label class="catalog-filters__label">Объем</label>
+                                <div class="catalog-filters__checkboxes">
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="volume" value="0.1-0.7">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">0.1 - 0.7 л</span>
+                                    </label>
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="volume" value="0.2-0.4">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">0.2 - 0.4 л</span>
+                                    </label>
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="volume" value="0.5-0.9">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">0.5 - 0.9 л</span>
+                                    </label>
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="volume" value="1.0-1.9">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">1.0 - 1.9 л</span>
+                                    </label>
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="volume" value="2.0-3.0">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">2.0 - 3.0 л</span>
+                                    </label>
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="volume" value="3.0-5.0">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">3.0 - 5.0 л</span>
+                                    </label>
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="volume" value="5.0-10.0">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">5.0 - 10.0 л</span>
+                                    </label>
+                                </div>
+                                <div class="catalog-filters__range">
+                                    <input type="number" name="volumeFrom" placeholder="от" class="catalog-filters__range-input" step="0.1" min="0">
+                                    <input type="number" name="volumeTo" placeholder="до" class="catalog-filters__range-input" step="0.1" min="0">
+                                </div>
+                            </div>
+
+                            <div class="catalog-filters__group">
+                                <label class="catalog-filters__label">Горловина</label>
+                                <div class="catalog-filters__checkboxes">
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="neck" value="28 мм">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">28 мм</span>
+                                    </label>
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="neck" value="33 мм">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">33 мм</span>
+                                    </label>
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="neck" value="38 мм">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">38 мм</span>
+                                    </label>
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="neck" value="48 мм">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">48 мм</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="catalog-filters__group">
+                                <label class="catalog-filters__label">Назначение</label>
+                                <div class="catalog-filters__checkboxes">
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="purpose" value="Питьевая вода">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">Питьевая вода</span>
+                                    </label>
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="purpose" value="Молоко">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">Молоко</span>
+                                    </label>
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="purpose" value="Пиво, газированные напитки">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">Пиво, газированные напитки</span>
+                                    </label>
+                                    <label class="catalog-filters__checkbox">
+                                        <input type="checkbox" name="purpose" value="Химия, масло, соусы">
+                                        <span class="catalog-filters__checkbox-mark"></span>
+                                        <span class="catalog-filters__checkbox-text">Химия, масло, соусы</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="catalog-filters__actions">
+                                <button type="button" class="btn btn__outline" id="clearFilters">Очистить фильтр</button>
+                                <button type="submit" class="btn btn__primary">Показать товары</button>
+                            </div>
+                        </form>
+                    </aside>
+
+                    <section class="catalog-results">
+                        <div class="catalog-results__header">
+                            <div>
+                                <h2 class="catalog-results__title">Каталог продукции</h2>
+                                <p class="catalog-results__count" data-product-count>Найдено 0 позиций</p>
+                            </div>
+                            <select class="catalog-filters__control" name="sort" id="catalogSort">
+                                <option value="default">По умолчанию</option>
+                                <option value="priceAsc">Сначала дешевле</option>
+                                <option value="priceDesc">Сначала дороже</option>
+                            </select>
+                        </div>
+                        <div class="catalog-grid" data-product-grid="catalog"></div>
+                        <div class="catalog-pagination" data-pagination></div>
+                    </section>
+                </div>
+            </div>
+        </section>
+
+        <section class="company-info">
+            <div class="container">
+                <div class="company-info__grid">
+                    <div class="info-card">
+                        <h3 class="info-card__title">О компании ООО ГК «МАРГКОМ»</h3>
+                        <p class="info-card__text">
+                            ООО ГК «МАРГКОМ» —
+                            Многопрофильная группа
+                            компаний, объединяющая производство  ПЭТ-тары,
+                            производство фасованного
+                            подсолнечного и иных видов масел, дистрибуцию
+                            масложировой продукции
+                            (промышленные жиры, маргарины) и комплексное обеспечение сырьем предприятий пищевой промышленности.
+                        </p>
+                        <a href="/pages/about.html" class="btn btn__transparent info-card__link">Подробнее
+                            <img src="/images/icons/arrow-blue.svg" alt="arrow">
+                        </a>
+                    </div>
+                    <div class="info-card">
+                        <h3 class="info-card__title">Наше производство</h3>
+                        <p class="info-card__text">
+                            Производим ПЭТ-упаковку различной номенклатуры до 5 миллионов единиц в месяц по стандартным и индивидуальным параметрам. Широкий ассортимент бутылок, флаконов и канистр от 0,1 л до 5 л. Контроль качества, доступные цены и индивидуальные решения под ваш бизнес.
+                        </p>
+                        <a href="/pages/production.html" class="btn btn__transparent info-card__link">Подробнее
+                            <img src="/images/icons/arrow-blue.svg" alt="arrow">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer"></div>
+
+    <script type="module" src="/src/js/main.js"></script>
+    <script type="module" src="/src/js/filter.js"></script>
+</body>
+</html>

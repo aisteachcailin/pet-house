@@ -1,20 +1,23 @@
-// Цвета
 $accent-color: #5DA9FF;
+$accent-color-hover: #69B0FF;
+$accent-color-soft: #9FCFF4;
 $text-color: #05133A;
 $text-secondary: #516173;
+$text-muted: #7E869B;
+$muted-blue: #A1B6CC;
 $white: #ffffff;
+$border-color: #DFE3EE;
+$form-input-bg: #3161A3;
+$form-checkbox-bg: #29558F;
+$error-color: #FF4D4D;
 
-// Шрифты
 $font-main: 'Roboto', sans-serif;
 $font-weight-light: 300;
 $font-weight-medium: 500;
 $font-weight-semibold: 600;
 
-// Размеры
 $container-width: 1320px;
 $header-height: 88px;
-
-// Брейкпоинты
 $breakpoint-mobile: 320px;
 $breakpoint-tablet: 768px;
 $breakpoint-desktop: 1920px;

@@ -19,12 +19,16 @@
         color: $white;
         
         &:hover {
-            background: #69B0FF;
+            background: $accent-color-hover;
         }
     }
 
     &__outline {
-        background: $white;
+        background: linear-gradient(
+            to bottom, 
+            rgba(93, 169, 255, 0.01), 
+            rgba(255, 255, 255, 0.4)
+        );
         border: 1px solid $accent-color;
         color: $accent-color;
         box-shadow: 
@@ -32,7 +36,24 @@
             1px -1px 6px rgba(59, 112, 173, 0.2);
         
         &:hover {
-            background: rgba(93, 169, 255, 0.05);
+            background: linear-gradient(
+                to bottom, 
+                rgba(93, 169, 255, 0.01), 
+                rgba(255, 255, 255, 0.8)
+            );
+            box-shadow: 
+            2px -2px 6px rgba(190, 220, 255, 0.25),
+            -2px 2px 6px rgba(59, 112, 173, 0.2);
+        }
+    }
+
+    &__transparent {
+        color: $accent-color;
+        font-weight: $font-weight-semibold;
+        padding: 17px 0;
+
+        &:hover {
+            color: $accent-color-hover;
         }
     }
 

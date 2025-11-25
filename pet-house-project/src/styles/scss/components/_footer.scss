@@ -65,7 +65,7 @@
             a {
                 font-size: 18px;
                 font-weight: 400;
-                color: #7E869B;
+                color: $text-muted;
             }
         }
     }
@@ -91,7 +91,7 @@
 
             span {
                 display: block;
-                color: #7E869B;
+                color: $text-muted;
             }
         }
     }
@@ -134,7 +134,7 @@
     }
 
     .footer__title {
-        color: #7E869B;
+        color: $text-muted;
         font-weight: $font-weight-light;
         font-size: 24px;
         margin-bottom: 12px;
@@ -153,12 +153,6 @@
         font-size: 24px;
         font-weight: $font-weight-light;
         transition: 0.2s ease-in-out;
-
-        &:hover {
-            color: $accent-color;
-            font-weight: $font-weight-medium;
-            text-decoration: underline;
-        }
     }
 }
 
