@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты — ПЭТ-Хаус НН</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/styles/scss/main.scss">
+</head>
+<body>
+    <div id="header"></div>
+
+    <main class="main padding-page">
+        <div class="container">
+            <h1 class="page__title">Контакты</h1>
+            <div class="contacts">
+                <div class="contacts-block">
+                    <span class="contacts__head">Телефоны</span>
+                    <div class="contacts-phones">
+                        <a class="contacts__value" href="tel:89519011502">8 (951) 901-15-02</a>
+                        <a class="contacts__value" href="tel:88312778422">8 (831) 277-84-22</a>
+                        <a class="contacts__value" href="tel:89200340149">8 (920) 034-01-49</a>
+                    </div>
+                </div>
+                <div class="contacts-block">
+                    <span class="contacts__head">Почта</span>
+                    <a class="contacts__value" href="mailto:regiontorg_99@mail.ru">regiontorg_99@mail.ru</a>
+                </div>
+            </div>
+            <div class="addresses shadow-block">
+                <div class="addresses-text">
+                    <h2 class="addresses__title">Адреса</h2>
+                    <div class="addresses-info">
+                        <span class="contacts__head">Офис</span>
+                        <p class="addresses-info__value">г. Нижний Новгород, ул. Кузбасская 17А</p>
+                    </div>
+                    <div class="addresses-info">
+                        <span class="contacts__head">Производство</span>
+                        <p class="addresses-info__value">г. Кстово, ул. Магистральная, здание 83</p>
+                    </div>
+                    <div class="addresses-info">
+                        <span class="contacts__head">Время работы</span>
+                        <div class="addresses-time">
+                            <span class="addresses-info__name">Пн - Пт:</span>
+                            <span class="addresses-info__value">8.00 - 17.00</span>
+                        </div>
+                        <div class="addresses-time">
+                            <span class="addresses-info__name">Сб - Вс:</span>
+                            <span class="addresses-info__value">Выходные</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="map-wrapper">
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer"></div>
+
+        <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш_api_ключ&lang=ru_RU" type="text/javascript"></script>
+        <script>
+            ymaps.ready(init);
+    
+            function init() {
+                var map = new ymaps.Map('map', {
+                    center: [56.252, 44.042],
+                    zoom: 10,
+                    controls: ['zoomControl', 'fullscreenControl']
+                });
+    
+                var officeCoords = [56.2389, 43.9185]; 
+                var productionCoords = [56.1473, 44.1978];
+    
+                var officePlacemark = new ymaps.Placemark(officeCoords, {
+                    balloonContent: '<strong>Офис</strong><br>г. Нижний Новгород, ул. Кузбасская, 17А'
+                }, {
+                    preset: 'islands#blueOfficeIcon',
+                    balloonCloseButton: true
+                });
+    
+                var productionPlacemark = new ymaps.Placemark(productionCoords, {
+                    balloonContent: '<strong>Производство</strong><br>г. Кстово, ул. Магистральная, здание 83'
+                }, {
+                    preset: 'islands#greenFactoryIcon',
+                    balloonCloseButton: true
+                });
+
+                map.geoObjects.add(officePlacemark);
+                map.geoObjects.add(productionPlacemark);
+
+                map.setBounds(map.geoObjects.getBounds(), {
+                    checkZoomRange: true,
+                    zoomMargin: 20
+                });
+            }
+        </script>
+
+    <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>

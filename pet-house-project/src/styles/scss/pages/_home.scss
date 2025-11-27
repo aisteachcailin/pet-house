@@ -1,8 +1,36 @@
+.padding-page .container{
+    margin-top: 72px;
+}
+
+.page__title {
+    font-size: 48px;
+    font-weight: $font-weight-medium;
+}
+
 .section__title {
     font-size: 48px;
     font-weight: $font-weight-semibold;
     color: $text-color;
     text-align: center;
+}
+
+.privacy {
+    padding-bottom: 120px;
+    font-size: 28px;
+
+    a:hover {
+        color: $accent-color;
+        transition: 0.2s ease-in-out;
+    }
+}
+
+.shadow-block {
+    padding: 32px;
+    border-radius: 24px;
+    background: $white;
+    box-shadow: 
+        -2px 2px 14px 1px rgba(67, 93, 124, 0.08),
+        -1px 1px 4px 1px rgba(67, 93, 124, 0.1);
 }
 
 .glass-block {

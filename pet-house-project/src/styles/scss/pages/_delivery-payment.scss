@@ -1,0 +1,100 @@
+    .conditions {
+        display: grid;
+        gap: 40px;
+        grid-template-columns: repeat(2, 1fr);
+    
+        &__title {
+            margin-bottom: 16px;
+            font-size: 32px;
+            font-weight: $font-weight-medium;
+        }
+
+        &__desc {
+            font-size: 24px;
+            font-weight: $font-weight-light;
+
+            span {
+                margin-top: 8px;
+                color: $muted-blue;
+            }
+        }
+
+        &__info {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        &__detail {
+            font-size: 24px;
+            display: flex;
+            row-gap: 8px;
+
+            a {
+                color: $accent-color;
+            }
+        }
+
+        &__name {
+            color: $text-muted;
+            font-weight: $font-weight-light;
+            width: 60%;
+        }
+
+        &__value {
+            color: $text-color;
+            font-weight: $font-weight-medium;
+            flex: 1;
+        }
+
+        &-delivery {
+            background: url('/images/delivery-payment-bg.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            grid-column: 1 / 3;
+
+            .conditions__desc {
+                font-size: 28px;
+            }
+            .conditions__info {
+                margin-top: 87px;
+            }
+            .conditions__detail {
+                row-gap: 12px;
+            }
+
+            &-text {
+                width: 40%;
+            }
+        }
+    }
+
+    .regions {
+        padding-bottom: 60px;
+        // display: flex;
+        // flex-direction: row;
+        // justify-content: space-between;
+
+        &-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+
+            &__item {
+                background: #DEEEFF;
+                font-size: 18px;
+                font-weight: $font-weight-light;
+                color: $text-color;
+                padding: 8px 14px;
+                border-radius: 42px;
+            }
+        }
+
+        &__map {
+            background: url(/images/map.svg);
+            width: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    }
+
