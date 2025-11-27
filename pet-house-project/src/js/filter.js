@@ -1,10 +1,10 @@
 import { products } from './data/products.js';
 import { renderProductCards } from './components/productCard.js';
 
-const ITEMS_PER_PAGE = 21;
+const ITEMS_PER_PAGE = 12;
 
 let currentPage = 1;
-let filteredProducts = [];
+let filteredProducts = [...products];
 
 document.addEventListener('DOMContentLoaded', () => {
     const filterForm = document.getElementById('catalogFilters');
@@ -15,8 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const paginationContainer = document.querySelector('[data-pagination]');
 
     if (!filterForm || !grid) {
+        console.error('Filter form or grid not found');
         return;
     }
+
+    // Инициализация сворачивания/разворачивания групп фильтров
+    initFilterToggles();
 
     const applyFilters = () => {
         const formData = new FormData(filterForm);
@@ -40,13 +44,72 @@ document.addEventListener('DOMContentLoaded', () => {
         renderPage(grid);
         updateCount(filteredProducts.length, countElement);
         renderPagination(paginationContainer, filteredProducts.length);
+        scrollToProducts();
     };
 
-    filterForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        applyFilters();
+    function scrollToProducts() {
+    const gridTop = grid.getBoundingClientRect().top + window.pageYOffset;
+    const scrollPosition = gridTop - 88; // Учитываем шапку
+    
+        // Прокручиваем только если товары не в зоне видимости
+        if (!isElementInViewport(grid)) {
+            window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
+        }
+    }
+
+        // Проверка, находится ли элемент в зоне видимости
+    function isElementInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+
+    // Функция для инициализации переключателей
+    function initFilterToggles() {
+        const filterLabels = filterForm.querySelectorAll('.catalog-filters__label');
+        
+        filterLabels.forEach(label => {
+            const group = label.parentElement;
+            const checkboxes = group.querySelector('.catalog-filters__checkboxes');
+            
+            // Устанавливаем начальную высоту
+            checkboxes.style.maxHeight = checkboxes.scrollHeight + 'px';
+            group.classList.add('filter-group--expanded');
+            
+            label.addEventListener('click', (e) => {
+                if (e.target.type === 'checkbox') return;
+                
+                if (group.classList.contains('filter-group--expanded')) {
+                    // Сворачиваем
+                    checkboxes.style.maxHeight = '0';
+                    checkboxes.style.opacity = '0';
+                    group.classList.remove('filter-group--expanded');
+                } else {
+                    // Разворачиваем
+                    checkboxes.style.maxHeight = checkboxes.scrollHeight + 'px';
+                    checkboxes.style.opacity = '1';
+                    group.classList.add('filter-group--expanded');
+                }
+            });
+        });
+    }
+
+    // Слушаем изменения всех чекбоксов
+    const checkboxes = filterForm.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', applyFilters);
     });
 
+    // Слушаем изменения селекта сортировки
+    if (sortSelect) {
+        sortSelect.addEventListener('change', applyFilters);
+    }
+
+    // Кнопка очистки
     if (clearBtn) {
         clearBtn.addEventListener('click', () => {
             filterForm.reset();
@@ -54,30 +117,74 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (sortSelect) {
-        sortSelect.addEventListener('change', () => {
-            applyFilters();
-        });
-    }
+    // Убираем стандартную отправку формы
+    filterForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        applyFilters();
+    });
 
+    // Первоначальная загрузка
     applyFilters();
 });
 
 function matchesProduct(product, criteria) {
+    // Фильтр по типу продукции
     if (criteria.types.length > 0 && !criteria.types.includes(product.type)) {
         return false;
     }
 
-    if (criteria.necks.length > 0 && !criteria.necks.includes(product.neck)) {
-        return false;
+    // Фильтр по горловине (объединенный с стандартом)
+    if (criteria.necks.length > 0) {
+        let matchesNeck = false;
+        
+        criteria.necks.forEach(neckFilter => {
+            const productNeckCombined = `${product.neck} ${product.standard}`.trim();
+            if (productNeckCombined.includes(neckFilter) || neckFilter.includes(productNeckCombined)) {
+                matchesNeck = true;
+                return;
+            }
+            
+            if (product.neck && (neckFilter === product.neck || product.neck.includes(neckFilter))) {
+                matchesNeck = true;
+                return;
+            }
+            
+            if (product.neck && product.neck.includes(';')) {
+                const multipleNecks = product.neck.split(';').map(n => n.trim());
+                if (multipleNecks.some(neck => neck.includes(neckFilter) || neckFilter.includes(neck))) {
+                    matchesNeck = true;
+                    return;
+                }
+            }
+        });
+
+        if (!matchesNeck) {
+            return false;
+        }
     }
 
-    if (criteria.purposes.length > 0 && !criteria.purposes.includes(product.purpose)) {
-        return false;
+    // Фильтр по назначению
+    if (criteria.purposes.length > 0) {
+        let matchesPurpose = false;
+        
+        criteria.purposes.forEach(filterPurpose => {
+            const productPurposes = product.purpose.split(';').map(p => p.trim());
+            if (productPurposes.some(productPurpose => 
+                productPurpose.includes(filterPurpose) || filterPurpose.includes(productPurpose)
+            )) {
+                matchesPurpose = true;
+                return;
+            }
+        });
+
+        if (!matchesPurpose) {
+            return false;
+        }
     }
 
-    if (criteria.volumes.length > 0) {
-        const productVolume = parseFloat(product.volume);
+    // Фильтр по объему (диапазоны) - только для товаров с объемом
+    if (criteria.volumes.length > 0 && product.volume) {
+        const productVolume = parseFloat(product.volume.replace(' л', '').replace(',', '.'));
         const matchesVolumeRange = criteria.volumes.some((range) => {
             const [min, max] = range.split('-').map(parseFloat);
             return productVolume >= min && productVolume <= max;
@@ -88,14 +195,9 @@ function matchesProduct(product, criteria) {
         }
     }
 
-    if (criteria.volumeFrom || criteria.volumeTo) {
-        const productVolume = parseFloat(product.volume);
-        if (criteria.volumeFrom && productVolume < parseFloat(criteria.volumeFrom)) {
-            return false;
-        }
-        if (criteria.volumeTo && productVolume > parseFloat(criteria.volumeTo)) {
-            return false;
-        }
+    // Для товаров без объема (крышки, преформы) - пропускаем фильтрацию по объему
+    if (criteria.volumes.length > 0 && !product.volume) {
+        return false;
     }
 
     return true;
@@ -179,49 +281,53 @@ function renderPagination(container, totalItems) {
     }
 
     container.innerHTML = `
-        <button class="pagination__btn pagination__btn--prev" ${currentPage === 1 ? 'disabled' : ''}>
+        <button class="catalog-pagination__btn catalog-pagination__btn--prev btn__outline" ${currentPage === 1 ? 'disabled' : ''}>
             <img src="/images/icons/arrow-blue.svg" alt="Назад">
         </button>
-        <div class="pagination__pages">
+        <div class="catalog-pagination__pages">
             ${pages.map((page) => {
                 if (page === 'ellipsis') {
                     return '<span class="pagination__ellipsis">...</span>';
                 }
                 const isActive = page === currentPage;
-                return `<button class="pagination__page ${isActive ? 'pagination__page--active' : ''}" data-page="${page}">${page}</button>`;
+                return `<button class="catalog-pagination__page ${isActive ? 'catalog-pagination__page--active' : ''}" data-page="${page}">${page}</button>`;
             }).join('')}
         </div>
-        <button class="pagination__btn pagination__btn--next" ${currentPage === totalPages ? 'disabled' : ''}>
+        <button class="catalog-pagination__btn catalog-pagination__btn--next btn__outline" ${currentPage === totalPages ? 'disabled' : ''}>
             <img src="/images/icons/arrow-blue.svg" alt="Вперед">
         </button>
     `;
 
     const grid = document.querySelector('[data-product-grid="catalog"]');
 
-    container.querySelectorAll('.pagination__page').forEach((btn) => {
+    container.querySelectorAll('.catalog-pagination__page').forEach((btn) => {
         btn.addEventListener('click', () => {
             currentPage = parseInt(btn.dataset.page);
             renderPage(grid);
             renderPagination(container, totalItems);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Прокрутка к началу блока с товарами с учетом шапки (88px)
+            const gridTop = grid.getBoundingClientRect().top + window.pageYOffset;
+            window.scrollTo({ top: gridTop - 88, behavior: 'smooth' });
         });
     });
 
-    container.querySelector('.pagination__btn--prev')?.addEventListener('click', () => {
+    container.querySelector('.catalog-pagination__btn--prev')?.addEventListener('click', () => {
         if (currentPage > 1) {
             currentPage--;
             renderPage(grid);
             renderPagination(container, totalItems);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const gridTop = grid.getBoundingClientRect().top + window.pageYOffset;
+            window.scrollTo({ top: gridTop - 88, behavior: 'smooth' });
         }
     });
 
-    container.querySelector('.pagination__btn--next')?.addEventListener('click', () => {
+    container.querySelector('.catalog-pagination__btn--next')?.addEventListener('click', () => {
         if (currentPage < totalPages) {
             currentPage++;
             renderPage(grid);
             renderPagination(container, totalItems);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const gridTop = grid.getBoundingClientRect().top + window.pageYOffset;
+            window.scrollTo({ top: gridTop - 88, behavior: 'smooth' });
         }
     });
 }
