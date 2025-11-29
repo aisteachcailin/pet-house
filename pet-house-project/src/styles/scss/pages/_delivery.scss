@@ -48,7 +48,7 @@
         }
 
         &-delivery {
-            background: url('/images/delivery-payment-bg.jpg');
+            background: url('/images/background/delivery.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             grid-column: 1 / 3;
@@ -71,14 +71,19 @@
 
     .regions {
         padding-bottom: 60px;
-        // display: flex;
-        // flex-direction: row;
-        // justify-content: space-between;
+        display: flex;
+
+        &-text {
+            position: relative;
+            width: 37%;
+        }
 
         &-list {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
+            position: absolute;
+            bottom: 0;
 
             &__item {
                 background: #DEEEFF;
@@ -87,14 +92,22 @@
                 color: $text-color;
                 padding: 8px 14px;
                 border-radius: 42px;
+
+                &:first-child {
+                    background: $accent-color;
+                    color: $white;
+                }
             }
         }
 
         &__map {
-            background: url(/images/map.svg);
-            width: 100%;
-            background-size: cover;
-            background-repeat: no-repeat;
+            width: 63%;
+
+            img {
+                width: 100%;
+                height: 500px;
+                object-fit: cover;
+            }
         }
     }
 

@@ -22,6 +22,40 @@ document.addEventListener('DOMContentLoaded', () => {
     // Инициализация сворачивания/разворачивания групп фильтров
     initFilterToggles();
 
+    // Восстановление фильтров из URL
+    restoreFiltersFromURL();
+
+    // Обработка параметра product в URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('product');
+    if (productId) {
+        // Прокручиваем к товару после применения фильтров и рендеринга
+        const scrollToProduct = () => {
+            const productCard = document.querySelector(`[data-product-id="${productId}"], [data-productid="${productId}"]`);
+            if (productCard) {
+                const header = document.querySelector('.header');
+                const headerHeight = header ? header.offsetHeight : 88;
+                const cardTop = productCard.getBoundingClientRect().top + window.pageYOffset;
+                window.scrollTo({ top: cardTop - headerHeight - 20, behavior: 'smooth' });
+                // Подсвечиваем карточку
+                productCard.style.transition = 'box-shadow 0.3s ease';
+                productCard.style.boxShadow = '0 0 0 3px rgba(93, 169, 255, 0.5)';
+                setTimeout(() => {
+                    productCard.style.boxShadow = '';
+                }, 2000);
+            }
+        };
+        
+        // Пытаемся прокрутить после рендеринга
+        setTimeout(scrollToProduct, 500);
+        // Также слушаем изменения в DOM
+        const observer = new MutationObserver(() => {
+            scrollToProduct();
+            observer.disconnect();
+        });
+        observer.observe(grid, { childList: true });
+    }
+
     const applyFilters = () => {
         const formData = new FormData(filterForm);
         const criteria = {
@@ -45,7 +79,82 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCount(filteredProducts.length, countElement);
         renderPagination(paginationContainer, filteredProducts.length);
         scrollToProducts();
+        
+        // Сохраняем фильтры в URL
+        saveFiltersToURL(criteria);
     };
+
+    function saveFiltersToURL(criteria) {
+        const urlParams = new URLSearchParams();
+        
+        if (criteria.types.length > 0) {
+            criteria.types.forEach(type => urlParams.append('type', type));
+        }
+        if (criteria.volumes.length > 0) {
+            criteria.volumes.forEach(volume => urlParams.append('volume', volume));
+        }
+        if (criteria.necks.length > 0) {
+            criteria.necks.forEach(neck => urlParams.append('neck', neck));
+        }
+        if (criteria.purposes.length > 0) {
+            criteria.purposes.forEach(purpose => urlParams.append('purpose', purpose));
+        }
+        if (criteria.sort && criteria.sort !== 'default') {
+            urlParams.set('sort', criteria.sort);
+        }
+        
+        // Сохраняем product ID если он есть
+        const currentProductId = new URLSearchParams(window.location.search).get('product');
+        if (currentProductId) {
+            urlParams.set('product', currentProductId);
+        }
+
+        const newURL = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '');
+        window.history.replaceState({}, '', newURL);
+        
+        // Обновляем data-product-id для карточек после рендеринга
+        setTimeout(() => {
+            filteredProducts.forEach((product, index) => {
+                const card = grid.children[index];
+                if (card) {
+                    card.setAttribute('data-product-id', product.id);
+                    card.dataset.productId = product.id;
+                }
+            });
+        }, 100);
+    }
+
+    function restoreFiltersFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Восстанавливаем фильтры
+        urlParams.getAll('type').forEach(type => {
+            const checkbox = filterForm.querySelector(`input[name="type"][value="${type}"]`);
+            if (checkbox) checkbox.checked = true;
+        });
+        
+        urlParams.getAll('volume').forEach(volume => {
+            const checkbox = filterForm.querySelector(`input[name="volume"][value="${volume}"]`);
+            if (checkbox) checkbox.checked = true;
+        });
+        
+        urlParams.getAll('neck').forEach(neck => {
+            const checkbox = filterForm.querySelector(`input[name="neck"][value="${neck}"]`);
+            if (checkbox) checkbox.checked = true;
+        });
+        
+        urlParams.getAll('purpose').forEach(purpose => {
+            const checkbox = filterForm.querySelector(`input[name="purpose"][value="${purpose}"]`);
+            if (checkbox) checkbox.checked = true;
+        });
+        
+        if (sortSelect) {
+            const sort = urlParams.get('sort');
+            if (sort) {
+                sortSelect.value = sort;
+            }
+        }
+    }
 
     function scrollToProducts() {
     const gridTop = grid.getBoundingClientRect().top + window.pageYOffset;
@@ -125,6 +234,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Первоначальная загрузка
     applyFilters();
+    
+    // Экспортируем функции для использования в других модулях
+    window.restoreFiltersFromURL = restoreFiltersFromURL;
 });
 
 function matchesProduct(product, criteria) {

@@ -24,6 +24,22 @@
     }
 }
 
+.square-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    padding: 10px;
+    background: $bg;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        width: 40px;
+        height: 40px;
+    }
+}
+
 .shadow-block {
     padding: 32px;
     border-radius: 24px;
@@ -110,7 +126,7 @@
 }
 
 .hero {
-    background-image: url('/images/hero-bg.jpg');
+    background-image: url('/images/background/main-hero.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -221,7 +237,7 @@
     height: 600px;
 
     .container {
-        background: url('/images/news-bg.jpg');
+        background: url('/images/background/news.jpg');
         border-radius: 24px;
         padding: 40px;
         height: 100%;
@@ -276,6 +292,7 @@
     gap: 12px;
     max-width: 298px;
     width: 100%;
+
     &__image {
         img {
             width: 100%;
@@ -306,8 +323,7 @@
         gap: 8px;
         cursor: pointer;
         align-items: flex-start;
-        transition: all 0.4s ease;
-        overflow: hidden;
+        transition: all 0.3s ease;
     
         span:first-child {
             font-weight: $font-weight-light;
@@ -321,6 +337,12 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            transition: all 0.3s ease;
+            max-height: 1.2em;
+
+            &.animating {
+                overflow: hidden;
+            }
         }
     
         &.expanded {
@@ -383,7 +405,7 @@
     padding-bottom: 60px;
 
     .container {
-        background: url('/images/business-bg.jpg');
+        background: url('/images/background/business.jpg');
         border-radius: 24px;
         height: 600px;
     }
@@ -471,7 +493,7 @@
     padding: 60px 0;
 
     .container {
-        background: url('/images/form-bg.jpg');
+        background: url('/images/background/main-form.jpg');
         border-radius: 24px;
         padding: 40px;
     }
@@ -494,6 +516,73 @@
         font-weight: $font-weight-light;
         margin-bottom: 62px;
         color: $white;
+    }
+}
+
+// Кастомные стили для Fancybox
+.fancybox__container {
+    font-family: 'Roboto', sans-serif;
+    
+    .fancybox__toolbar {
+        background: rgba(0, 0, 0, 0.8);
+        
+        .fancybox__button {
+            color: white;
+            
+            &:hover:not([disabled]) {
+                color: $accent-color;
+            }
+        }
+    }
+    
+    .fancybox__nav .fancybox__button {
+        background: rgba(255, 255, 255, 0.2);
+        
+        &:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    }
+    
+    .fancybox__caption {
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+        text-align: center;
+        font-size: 16px;
+    }
+}
+
+.pictures-slider__item a,
+.production-slider__big a,
+.production-tech__visual a,
+.company-info__certificate a,
+.certificates-pictures a {
+    display: block;
+    cursor: zoom-in;
+    transition: transform 0.3s ease;
+    
+    &:hover {
+        transform: scale(1.02);
+    }
+    
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.production-slider__big a {
+    display: block;
+    
+    img {
+        border-radius: 24px;
+    }
+}
+
+.pictures-slider__item a {
+    height: 100%;
+    
+    img {
+        border-radius: 24px;
     }
 }
 

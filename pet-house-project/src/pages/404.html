@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ошибка 404 — ПЭТ-Хаус НН</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/styles/scss/main.scss">
+</head>
+<body>
+    <div id="header"></div>
+
+    <main class="main error-page">
+        <div class="error-page__overlay">
+            <div class="container">
+                <section class="error-card">
+                    <h1 class="error-card__title">404</h1>
+                    <p class="error-card__subtitle">
+                        Страница не найдена. Кажется, ссылка устарела.<br>
+                        Вернитесь на главную или выберите ПЭТ-тару в каталоге.
+                    </p>
+                    <div class="error-card__buttons">
+                        <a href="/index.html" class="btn btn__primary" target="_blank">На главную</a>
+                        <a href="/pages/catalog.html" class="btn btn__outline" target="_blank">В каталог</a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>

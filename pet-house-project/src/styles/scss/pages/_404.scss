@@ -1,0 +1,39 @@
+.error-page {
+    background: url('/images/background/404.jpg') no-repeat center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.error-card {
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 40px;
+
+    &__label {
+        font-size: 18px;
+        color: $accent-color;
+    }
+
+    &__title {
+        font-size: 320px;
+        font-weight: $font-weight-semibold;
+        color: $text-secondary;
+    }
+
+    &__subtitle {
+        font-weight: $font-weight-medium;
+        color: $text-secondary;
+        font-size: 24px;
+        margin-bottom: 32px;
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+    }
+}
+

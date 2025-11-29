@@ -1,11 +1,39 @@
-document.addEventListener('DOMContentLoaded', () => {
-    emailjs.init('bkNMM51XqfqT68kLx');
+function initForms() {
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init('bkNMM51XqfqT68kLx');
+    }
+    
     ['customForm', 'modalForm'].forEach((formId) => {
-        if (document.getElementById(formId)) {
+        const form = document.getElementById(formId);
+        if (form && !form.dataset.initialized) {
             new FormValidator(formId);
+            form.dataset.initialized = 'true';
         }
     });
+}
+
+// Инициализация при загрузке DOM
+document.addEventListener('DOMContentLoaded', () => {
+    // Ждем загрузки emailjs
+    if (typeof emailjs === 'undefined') {
+        const checkEmailjs = setInterval(() => {
+            if (typeof emailjs !== 'undefined') {
+                clearInterval(checkEmailjs);
+                initForms();
+            }
+        }, 100);
+        // Таймаут на случай если emailjs не загрузится
+        setTimeout(() => {
+            clearInterval(checkEmailjs);
+            initForms();
+        }, 5000);
+    } else {
+        initForms();
+    }
 });
+
+// Экспортируем для использования в других модулях
+window.initForms = initForms;
 
 const CONFIG = {
     emailService: {
@@ -130,20 +158,27 @@ class FormValidator {
             return;
         }
 
+        const isModal = formId === 'modalForm';
+        const prefix = isModal ? 'modal' : '';
+        const errorPrefix = isModal ? 'modal' : '';
+
         this.inputs = {
-            name: document.getElementById('formName'),
-            phone: document.getElementById('formPhone'),
-            email: document.getElementById('formEmail'),
-            agree: document.getElementById('formAgree')
+            name: document.getElementById(isModal ? 'modalFormName' : 'formName'),
+            phone: document.getElementById(isModal ? 'modalFormPhone' : 'formPhone'),
+            email: document.getElementById(isModal ? 'modalFormEmail' : 'formEmail'),
+            agree: document.getElementById(isModal ? 'modalFormAgree' : 'formAgree'),
+            privacy: isModal ? document.getElementById('modalFormPrivacy') : null
         };
 
         this.errors = {
-            name: document.getElementById('nameError'),
-            phone: document.getElementById('phoneError'),
-            email: document.getElementById('emailError'),
-            agree: document.getElementById('agreeError')
+            name: document.getElementById(isModal ? 'modalNameError' : 'nameError'),
+            phone: document.getElementById(isModal ? 'modalPhoneError' : 'phoneError'),
+            email: document.getElementById(isModal ? 'modalEmailError' : 'emailError'),
+            agree: document.getElementById(isModal ? 'modalAgreeError' : 'agreeError'),
+            privacy: isModal ? document.getElementById('modalPrivacyError') : null
         };
 
+        this.isModal = isModal;
         this.phoneMask = this.inputs.phone ? new PhoneMask(this.inputs.phone) : null;
         this.init();
     }
@@ -170,6 +205,12 @@ class FormValidator {
         if (this.inputs.agree) {
             this.inputs.agree.addEventListener('change', () => {
                 this.clearError(this.inputs.agree);
+            });
+        }
+
+        if (this.inputs.privacy) {
+            this.inputs.privacy.addEventListener('change', () => {
+                this.clearError(this.inputs.privacy);
             });
         }
     }
@@ -272,6 +313,13 @@ class FormValidator {
             this.clearError(this.inputs.agree);
         }
 
+        if (this.isModal && this.inputs.privacy && !this.inputs.privacy.checked) {
+            this.showError(this.inputs.privacy, CONFIG.messages.agreementRequired);
+            isValid = false;
+        } else if (this.inputs.privacy) {
+            this.clearError(this.inputs.privacy);
+        }
+
         return isValid;
     }
 
@@ -280,9 +328,11 @@ class FormValidator {
             return;
         }
 
-        const errorElement = this.errors[input.name];
-        input.classList.add('form__input--error');
-        input.classList.remove('form__input--success', 'form__input--filled');
+        const errorElement = this.errors[input.name] || this.errors[input.name === 'privacy' ? 'privacy' : input.name];
+        if (input.type !== 'checkbox') {
+            input.classList.add('form__input--error');
+            input.classList.remove('form__input--success', 'form__input--filled');
+        }
 
         if (errorElement) {
             errorElement.textContent = message;
@@ -343,7 +393,7 @@ class FormValidator {
             this.clearAllErrors();
         } catch (error) {
             console.error('Ошибка отправки формы:', error);
-            alert('Произошла ошибка при отправке формы. Пожалуйста, попробуйте еще раз.');
+            this.showErrorPopup('Произошла ошибка при отправке формы. Пожалуйста, попробуйте еще раз.');
         }
     }
 
@@ -374,25 +424,86 @@ class FormValidator {
     }
 
     showSuccessPopup() {
+        // Закрываем модальное окно с формой, если оно открыто
+        if (this.isModal) {
+            const contactModal = document.getElementById('contactModal');
+            if (contactModal) {
+                contactModal.classList.remove('active');
+            }
+        }
+
         const popup = document.getElementById('successPopup');
         if (!popup) {
             return;
         }
 
         popup.classList.add('active');
+        document.body.style.overflow = 'hidden';
 
         const closeBtn = popup.querySelector('.popup__close');
+        const closeBtnX = popup.querySelector('.popup__close-btn');
+        
+        const closePopup = () => {
+            popup.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
         if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                popup.classList.remove('active');
-            });
+            closeBtn.onclick = closePopup;
+        }
+        if (closeBtnX) {
+            closeBtnX.onclick = closePopup;
         }
 
-        popup.addEventListener('click', (event) => {
+        popup.onclick = (event) => {
             if (event.target === popup) {
-                popup.classList.remove('active');
+                closePopup();
             }
-        });
+        };
+    }
+
+    showErrorPopup(message) {
+        // Закрываем модальное окно с формой, если оно открыто
+        if (this.isModal) {
+            const contactModal = document.getElementById('contactModal');
+            if (contactModal) {
+                contactModal.classList.remove('active');
+            }
+        }
+
+        const popup = document.getElementById('errorPopup');
+        if (!popup) {
+            return;
+        }
+
+        const errorText = popup.querySelector('#errorPopupText');
+        if (errorText) {
+            errorText.textContent = message || 'Произошла ошибка при отправке формы. Пожалуйста, попробуйте еще раз.';
+        }
+
+        popup.classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        const closeBtn = popup.querySelector('.popup__close');
+        const closeBtnX = popup.querySelector('.popup__close-btn');
+        
+        const closePopup = () => {
+            popup.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        if (closeBtn) {
+            closeBtn.onclick = closePopup;
+        }
+        if (closeBtnX) {
+            closeBtnX.onclick = closePopup;
+        }
+
+        popup.onclick = (event) => {
+            if (event.target === popup) {
+                closePopup();
+            }
+        };
     }
 
     clearAllErrors() {

@@ -1,0 +1,83 @@
+<div class="popup-overlay" id="contactModal">
+    <div class="popup popup--form">
+        <button class="popup__close-btn" aria-label="Закрыть">
+           <div class="popup__icon-close">
+                <img src="/images/icons/close.svg" alt="close">
+            </div>
+        </button>
+        <div class="popup__content">
+            <h3 class="popup__title">Свяжитесь с нами</h3>
+            <p class="popup__text">Оставьте заявку, и наши специалисты оперативно рассчитают стоимость и сроки поставки для вашего проекта.</p>
+            <form class="form form--modal" id="modalForm" novalidate>
+                <div class="form-fields-wrapper">
+                    <div class="form__group">
+                        <label for="modalFormName" class="form__label">Имя</label>
+                        <input type="text" id="modalFormName" name="name" class="form__input" placeholder="Иван">
+                        <div class="form__error" id="modalNameError"></div>
+                    </div>
+                    <div class="form__group">
+                        <label for="modalFormPhone" class="form__label">Телефон</label>
+                        <input type="tel" id="modalFormPhone" name="phone" class="form__input" placeholder="+7 900 900 90 - 90">
+                        <div class="form__error" id="modalPhoneError"></div>
+                    </div>
+                    <div class="form__group">
+                        <label for="modalFormEmail" class="form__label">Почта</label>
+                        <input type="email" id="modalFormEmail" name="email" class="form__input" placeholder="example@domain.com">
+                        <div class="form__error" id="modalEmailError"></div>
+                    </div>
+                </div>
+                <div class="form__group form__group-checkbox">
+                    <label class="form__checkbox">
+                        <input type="checkbox" id="modalFormAgree" name="agree" class="form__checkbox-input">
+                        <span class="form__checkbox-checkmark"></span>
+                        <span class="form__checkbox-text">Согласен на <a href="/pages/privacy.html" target="_blank">обработку персональных данных</a></span>
+                    </label>
+                    <div class="form__error" id="modalAgreeError"></div>
+                </div>
+                <div class="form__group form__group-checkbox">
+                    <label class="form__checkbox">
+                        <input type="checkbox" id="modalFormPrivacy" name="privacy" class="form__checkbox-input">
+                        <span class="form__checkbox-checkmark"></span>
+                        <span class="form__checkbox-text">Ознакомлен с <a href="/pages/privacy.html" target="_blank">политикой конфиденциальности</a></span>
+                    </label>
+                    <div class="form__error" id="modalPrivacyError"></div>
+                </div>
+                <button type="submit" class="btn btn__primary form__submit">Отправить</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="popup-overlay" id="successPopup">
+    <div class="popup popup--success">
+        <button class="popup__close-btn" aria-label="Закрыть">
+           <div class="popup__icon-close">
+                <img src="/images/icons/close.svg" alt="close">
+            </div>
+        </button>
+        <div class="popup__content">
+            <h3 class="popup__title">Спасибо за заявку</h3>
+            <p class="popup__text">Мы свяжемся с вами в течении часа</p>
+            <div class="popup__icon-success">
+                <img src="/images/icons/success.svg" alt="success">
+            </div>
+            <button class="btn btn__primary popup__close">Понятно</button>
+        </div>
+    </div>
+</div>
+
+<div class="popup-overlay" id="errorPopup">
+    <div class="popup popup--error">
+        <button class="popup__close-btn" aria-label="Закрыть">
+           <div class="popup__icon-close">
+                <img src="/images/icons/close.svg" alt="close">
+            </div>
+        </button>
+        <div class="popup__content">
+            <h3 class="popup__title">Ошибка отправки</h3>
+            <p class="popup__text" id="errorPopupText">Произошла ошибка при отправке формы. Пожалуйста, попробуйте еще раз</p>
+            <button class="btn btn__primary popup__close">Понятно</button>
+        </div>
+    </div>
+</div>
+

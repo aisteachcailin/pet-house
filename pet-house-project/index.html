@@ -13,13 +13,13 @@
     <div id="header"></div>
 
     <main class="main">
-        <section class="hero" style="background-image: url('/images/hero-bg.jpg');">
+        <section class="hero">
             <div class="container">
                 <div class="hero__text">
                     <h1 class="hero__title">ПЭТ-тара,<br>которой можно доверять</h1>
                     <p class="hero__subtitle">Производство и продажа ПЭТ-тары в Нижнем Новгороде, Нижегородской области и близлежащих регионах</p>
                 </div>
-                <a href="/pages/catalog.html" target="_blank" class="btn btn__primary hero__btn">Перейти в каталог</a>
+                <a href="/src/pages/catalog.html" class="btn btn__primary hero__btn">Перейти в каталог</a>
             </div>
         </section>
 
@@ -28,31 +28,31 @@
                 <div class="features__grid">
                     <div class="feature__item">
                         <div class="feature__icon">
-                            <img src="/images/icons/price.svg" alt="low price">
+                            <img src="/images/icons/low-price.svg" alt="low price">
                         </div>
                         <p class="feature__text">Низкие цены</p>
                     </div>
                     <div class="feature__item">
                         <div class="feature__icon">
-                            <img src="/images/icons/quality.svg" alt="good quality">
+                            <img src="/images/icons/high-quality.svg" alt="high quality">
                         </div>
                         <p class="feature__text">Высокое качество</p>
                     </div>
                     <div class="feature__item">
                         <div class="feature__icon">
-                            <img src="/images/icons/design.svg" alt="individual design">
+                            <img src="/images/icons/individual-design.svg" alt="individual design">
                         </div>
                         <p class="feature__text">Индивидуальный дизайн</p>
                     </div>
                     <div class="feature__item">
                         <div class="feature__icon">
-                            <img src="/images/icons/delivery.svg" alt="fast delivery">
+                            <img src="/images/icons/fast-delivery.svg" alt="fast delivery">
                         </div>
                         <p class="feature__text">Быстрая доставка</p>
                     </div>
                     <div class="feature__item">
                         <div class="feature__icon">
-                            <img src="/images/icons/assortment.svg" alt="big assortment">
+                            <img src="/images/icons/big-assortment.svg" alt="big assortment">
                         </div>
                         <p class="feature__text">Большой ассортимент</p>
                     </div>
@@ -65,12 +65,12 @@
                 <div class="new-products__text">
                     <h2 class="section__title">Новинки</h2>
                     <div class="new-products__items">
-                        <span class="glass-block">Упаковка для электродов</span>
-                        <span class="glass-block">Упаковки для соусов</span>
-                        <span class="glass-block">Упаковка для БАДов, сыпучих и гранулированных продуктов</span>
+                        <span class="glass-block glass-block--tag">Упаковка для электродов</span>
+                        <span class="glass-block glass-block--tag">Упаковки для соусов</span>
+                        <span class="glass-block glass-block--tag">Упаковка для БАДов, сыпучих и гранулированных продуктов</span>
                     </div>
                 </div>
-                <a href="/pages/catalog.html" target="_blank" class="btn btn__primary new-products__btn">
+                <a href="/src/pages/catalog.html" class="btn btn__primary new-products__btn">
                     Смотреть новинки
                     <img src="/images/icons/arrow-white.svg" alt="arrow">
                 </a>
@@ -81,7 +81,7 @@
             <div class="container">
                 <h2 class="section__title">Топ продаж</h2>
                 <div class="top-sales__grid" data-product-grid="top-sales"></div>
-                <a href="/pages/catalog.html" target="_blank" class="btn btn__primary top-sales__btn">
+                <a href="/src/pages/catalog.html" class="btn btn__primary top-sales__btn">
                     Перейти в каталог
                     <img src="/images/icons/arrow-white.svg" alt="arrow">
                 </a>
@@ -125,7 +125,7 @@
                             масложировой продукции
                             (промышленные жиры, маргарины) и комплексное обеспечение сырьем предприятий пищевой промышленности.
                         </p>
-                        <a href="/pages/about.html" target="_blank" class="btn btn__transparent info-card__link">Подробнее
+                        <a href="/src/pages/company.html#pictures-slider" class="btn btn__transparent info-card__link">Подробнее о ГК «МАРГКОМ»
                             <img src="/images/icons/arrow-blue.svg" alt="arrow">
                         </a>
                     </div>
@@ -134,7 +134,7 @@
                         <p class="info-card__text">
                             Производим ПЭТ-упаковку различной номенклатуры до 5 миллионов единиц в месяц по стандартным и индивидуальным параметрам. Широкий ассортимент бутылок, флаконов и канистр от 0,1 л до 5 л. Контроль качества, доступные цены и индивидуальные решения под ваш бизнес.
                         </p>
-                        <a href="/pages/production.html" target="_blank" class="btn btn__transparent info-card__link">Подробнее
+                        <a href="/src/pages/production.html" class="btn btn__transparent info-card__link">Подробнее
                             <img src="/images/icons/arrow-blue.svg" alt="arrow">
                         </a>
                     </div>
@@ -178,16 +178,6 @@
                 </div>
             </div>
         </section>
-
-        <div class="popup-overlay" id="successPopup">
-            <div class="popup">
-                <div class="popup__content">
-                    <h3 class="popup__title">Спасибо за заявку!</h3>
-                    <p class="popup__text">Мы свяжемся с вами в ближайшее время</p>
-                    <button class="btn btn__primary popup__close">Закрыть</button>
-                </div>
-            </div>
-        </div>
     </main>
 
     <div id="footer"></div>

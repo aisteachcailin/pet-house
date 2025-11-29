@@ -2,6 +2,7 @@ export function createProductCard(product) {
     const card = document.createElement('article');
     card.className = 'product-card';
     card.dataset.productId = product.id;
+    card.setAttribute('data-product-id', product.id);
     card.innerHTML = `
         <div class="product-card__image">
             <img src="${product.image}" alt="${product.title}">
